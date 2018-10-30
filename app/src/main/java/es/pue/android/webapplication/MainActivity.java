@@ -1,5 +1,7 @@
 package es.pue.android.webapplication;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,14 +21,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         webv = (WebView)findViewById(R.id.webV);
+        webv.setWebViewClient(new WebClient());
         btnLoad = (Button)findViewById(R.id.btnLoadURL);
 
         btnLoad.setOnClickListener(this);
+
+        Intent intent = getIntent();
+        if (intent != null && intent.getData() != null) {
+            Uri url = intent.getData();
+            webv.loadUrl(url.toString());
+        }
     }
 
     @Override
     public void onClick(View v) {
-        webv.setWebViewClient(new WebClient());
         webv.loadUrl("http://www.google.com");
     }
 
